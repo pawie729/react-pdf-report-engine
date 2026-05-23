@@ -1,8 +1,8 @@
 import { useState, useMemo } from "react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
-import PDFReport from "./PDFReport";
 import { workOrders, assets, inventory, materialRequests } from "./data";
 import "./App.css";
+import PDFReport from "./PDFReport";
 
 const TABS = [
   { key: "workorders", label: "Work Orders", count: workOrders.length },
@@ -21,14 +21,14 @@ const statusColor = {
 const Badge = ({ label }) => <span className={`badge ${statusColor[label] || "badge-gray"}`}>{label}</span>;
 
 function WorkOrdersGrid({ data, search }) {
-  const filtered = useMemo(() => data.filter(r =>
+  const filtered = useMemo(() => data.filter((r:any) =>
     Object.values(r).join(" ").toLowerCase().includes(search.toLowerCase())
   ), [data, search]);
   return (
     <table className="grid-table"><thead><tr>
       {["WO #","Title","Asset","Priority","Status","Assignee","Due Date","Est. Cost"].map(h=><th key={h}>{h}</th>)}
     </tr></thead><tbody>
-      {filtered.map((r,i)=><tr key={i}>
+      {filtered.map((r:any,i:any)=><tr key={i}>
         <td className="id-cell">{r.id}</td><td>{r.title}</td><td className="muted">{r.asset}</td>
         <td><Badge label={r.priority}/></td><td><Badge label={r.status}/></td>
         <td>{r.assignee}</td><td className="muted">{r.due}</td>
@@ -39,14 +39,14 @@ function WorkOrdersGrid({ data, search }) {
 }
 
 function AssetsGrid({ data, search }) {
-  const filtered = useMemo(() => data.filter(r =>
+  const filtered = useMemo(() => data.filter((r:any) =>
     Object.values(r).join(" ").toLowerCase().includes(search.toLowerCase())
   ), [data, search]);
   return (
     <table className="grid-table"><thead><tr>
       {["Asset ID","Name","Category","Location","Status","Last Service","Next Service","Value"].map(h=><th key={h}>{h}</th>)}
     </tr></thead><tbody>
-      {filtered.map((r,i)=><tr key={i}>
+      {filtered.map((r:any,i:any)=><tr key={i}>
         <td className="id-cell">{r.id}</td><td>{r.name}</td><td className="muted">{r.category}</td>
         <td className="muted">{r.location}</td><td><Badge label={r.status}/></td>
         <td className="muted">{r.lastService}</td><td className="muted">{r.nextService}</td>
@@ -57,14 +57,14 @@ function AssetsGrid({ data, search }) {
 }
 
 function InventoryGrid({ data, search }) {
-  const filtered = useMemo(() => data.filter(r =>
+  const filtered = useMemo(() => data.filter((r:any) =>
     Object.values(r).join(" ").toLowerCase().includes(search.toLowerCase())
   ), [data, search]);
   return (
     <table className="grid-table"><thead><tr>
       {["Item ID","Name","Category","Stock","Reorder Lvl","Unit","Location","Unit Cost","Supplier"].map(h=><th key={h}>{h}</th>)}
     </tr></thead><tbody>
-      {filtered.map((r,i)=><tr key={i}>
+      {filtered.map((r:any,i:any)=><tr key={i}>
         <td className="id-cell">{r.id}</td><td>{r.name}</td><td className="muted">{r.category}</td>
         <td className={r.stock<=r.reorderLevel?"num-cell warn-cell":"num-cell ok-cell"}>{r.stock}</td>
         <td className="muted">{r.reorderLevel}</td><td className="muted">{r.unit}</td>
@@ -76,14 +76,14 @@ function InventoryGrid({ data, search }) {
 }
 
 function MaterialRequestsGrid({ data, search }) {
-  const filtered = useMemo(() => data.filter(r =>
+  const filtered = useMemo(() => data.filter((r:any) =>
     Object.values(r).join(" ").toLowerCase().includes(search.toLowerCase())
   ), [data, search]);
   return (
     <table className="grid-table"><thead><tr>
       {["MR #","Requested By","Work Order","Item","Qty","Unit","Status","Request Date","Required Date","Total Cost"].map(h=><th key={h}>{h}</th>)}
     </tr></thead><tbody>
-      {filtered.map((r,i)=><tr key={i}>
+      {filtered.map((r:any,i:any)=><tr key={i}>
         <td className="id-cell">{r.id}</td><td>{r.requestedBy}</td><td className="wo-cell">{r.workOrder}</td>
         <td>{r.item}</td><td className="num-cell">{r.qty}</td><td className="muted">{r.unit}</td>
         <td><Badge label={r.status}/></td><td className="muted">{r.requestDate}</td>
@@ -102,27 +102,27 @@ export default function App() {
   const stats = {
     workorders: [
       {label:"Total",value:workOrders.length,cls:""},
-      {label:"Open",value:workOrders.filter(r=>r.status==="Open").length,cls:"stat-blue"},
-      {label:"In Progress",value:workOrders.filter(r=>r.status==="In Progress").length,cls:"stat-purple"},
-      {label:"Completed",value:workOrders.filter(r=>r.status==="Completed").length,cls:"stat-green"},
-      {label:"Est. Cost",value:"$"+workOrders.reduce((s,r)=>s+r.cost,0).toLocaleString(),cls:""},
+      {label:"Open",value:workOrders.filter((r:any)=>r.status==="Open").length,cls:"stat-blue"},
+      {label:"In Progress",value:workOrders.filter((r:any)=>r.status==="In Progress").length,cls:"stat-purple"},
+      {label:"Completed",value:workOrders.filter((r:any)=>r.status==="Completed").length,cls:"stat-green"},
+      {label:"Est. Cost",value:"$"+workOrders.reduce((s:any,r:any)=>s+r.cost,0).toLocaleString(),cls:""},
     ],
     assets: [
       {label:"Total",value:assets.length,cls:""},
-      {label:"Active",value:assets.filter(r=>r.status==="Active").length,cls:"stat-green"},
-      {label:"Under Maint.",value:assets.filter(r=>r.status==="Under Maintenance").length,cls:"stat-orange"},
-      {label:"Total Value",value:"$"+assets.reduce((s,r)=>s+r.value,0).toLocaleString(),cls:""},
+      {label:"Active",value:assets.filter((r:any)=>r.status==="Active").length,cls:"stat-green"},
+      {label:"Under Maint.",value:assets.filter((r:any)=>r.status==="Under Maintenance").length,cls:"stat-orange"},
+      {label:"Total Value",value:"$"+assets.reduce((s:any,r:any)=>s+r.value,0).toLocaleString(),cls:""},
     ],
     inventory: [
       {label:"Total SKUs",value:inventory.length,cls:""},
-      {label:"Low Stock",value:inventory.filter(r=>r.stock<=r.reorderLevel).length,cls:"stat-red"},
-      {label:"Inv. Value",value:"$"+inventory.reduce((s,r)=>s+(r.stock*r.unitCost),0).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,","),cls:""},
+      {label:"Low Stock",value:inventory.filter((r:any)=>r.stock<=r.reorderLevel).length,cls:"stat-red"},
+      {label:"Inv. Value",value:"$"+inventory.reduce((s:any,r:any)=>s+(r.stock*r.unitCost),0).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,","),cls:""},
     ],
     materialrequests: [
       {label:"Total",value:materialRequests.length,cls:""},
-      {label:"Pending",value:materialRequests.filter(r=>r.status==="Pending").length,cls:"stat-orange"},
-      {label:"Approved",value:materialRequests.filter(r=>r.status==="Approved").length,cls:"stat-green"},
-      {label:"Total Value",value:"$"+materialRequests.reduce((s,r)=>s+r.totalCost,0).toLocaleString(),cls:""},
+      {label:"Pending",value:materialRequests.filter((r:any)=>r.status==="Pending").length,cls:"stat-orange"},
+      {label:"Approved",value:materialRequests.filter((r:any)=>r.status==="Approved").length,cls:"stat-green"},
+      {label:"Total Value",value:"$"+materialRequests.reduce((s:any,r:any)=>s+r.totalCost,0).toLocaleString(),cls:""},
     ],
   };
 
@@ -175,7 +175,7 @@ export default function App() {
         </header>
 
         <div className="stats-bar">
-          {(stats[activeTab]||[]).map((s,i)=>(
+          {(stats[activeTab]||[]).map((s:any,i:any)=>(
             <div key={i} className="stat-chip">
               <span className={`stat-value ${s.cls}`}>{s.value}</span>
               <span className="stat-label">{s.label}</span>

@@ -1,14 +1,14 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg: #0d1117;
-  --surface: #161b22;
-  --surface2: #1c2128;
-  --border: #30363d;
-  --text: #e6edf3;
-  --muted: #7d8590;
-  --accent: #3b82f6;
-  --accent-dim: #1d4ed8;
+  --bg: #f8f9fa;        /* Light grayish-white canvas */
+  --surface: #ffffff;   /* Pure white for cards/containers */
+  --surface2: #f1f3f5;  /* Slightly darker gray for subtle nesting or hover states */
+  --border: #dcdfe3;    /* Soft gray border that is visible but not harsh */
+  --text: #1f2937;      /* Dark charcoal for high readability (better than pure black) */
+  --muted: #626d7a;     /* Mid-tone gray for secondary text/labels */
+  --accent: #2563eb;    /* Slightly deeper blue for crisp contrast on light backgrounds */
+  --accent-dim: #dbeafe;/* Light blue tint for active states, highlights, or badge backgrounds */
   --sidebar-w: 220px;
   --topbar-h: 60px;
 }
